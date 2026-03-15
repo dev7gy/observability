@@ -4,6 +4,11 @@ if [[ $(docker ps -q -f name=node_exporter) ]]; then
   exit 0
 fi
 
+# if network monitoring is not exists, create it
+if [[ -z $(docker network ls -q -f name=monitoring) ]]; then
+  docker network create monitoring
+fi
+
 # exclude rslave
 docker run -d \
   --net="host" \
