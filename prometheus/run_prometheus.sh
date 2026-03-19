@@ -1,4 +1,5 @@
 #!/bin/bash
+CONFIG_FILE=$1
 
 # prometheus
 function func_deploy_prometheus() { 
@@ -8,10 +9,10 @@ function func_deploy_prometheus() {
     fi
     # if prometheus.yaml is exists, use it as config file
     # in container, the config file is located at /etc/prometheus/prometheus.yml
-    if [[ -f "prometheus_with_alerts.yaml" ]]; then
-        echo "Using prometheus_with_alerts.yaml as config file."
+    if [[ -f "$CONFIG_FILE" ]]; then
+        echo "Using $CONFIG_FILE as config file."
         docker run --name prometheus -d --net="host" \
-            -v $(pwd)/prometheus_with_alerts.yaml:/etc/prometheus/prometheus.yml \
+            -v $(pwd)/$CONFIG_FILE:/etc/prometheus/prometheus.yml \
             -v $(pwd)/rules.yaml:/etc/prometheus/rules.yaml prom/prometheus
     else
         echo "prometheus_with_alerts.yaml not found. Using default config."
