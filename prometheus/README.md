@@ -1,3 +1,10 @@
+# Metric
+## Metric 유형
+### Counter
+이벤트 개수나 크기를 추적하며, 주로 특정 경로의 코드가 얼마나 자주 실행되는지 추적하는데 사용
+```PromQL
+rate(hello_world_total[1m])
+```
 # prometheus
 https://prometheus.io/download/
 https://hub.docker.com/r/prom/prometheus
