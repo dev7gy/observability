@@ -5,6 +5,15 @@
 ```PromQL
 rate(hello_world_total[1m])
 ```
+#### 카운팅 예외 처리
+```PromQL
+rate(hello_world_exceptions_total[1m])
+```
+얼마나 많은 요청이 처리되었는지 알지 못하면, 예외 개수는 유횽하지 않음
+수직 브라우저에서 다음 식을 사용해서 더 유용한 예외 비율을 계산 할 수 있음
+```PromQL
+rate(hello_world_exceptions_total[1m]) / rate(hello_world_total[1m])
+```
 # prometheus
 https://prometheus.io/download/
 https://hub.docker.com/r/prom/prometheus
