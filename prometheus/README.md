@@ -14,6 +14,12 @@ rate(hello_world_exceptions_total[1m])
 ```PromQL
 rate(hello_world_exceptions_total[1m]) / rate(hello_world_total[1m])
 ```
+#### Counter 증가 크기 변경
+Counter.inc(숫자)
+```PromQL
+hello_world_response_size_bytes_total
+```
+
 # prometheus
 https://prometheus.io/download/
 https://hub.docker.com/r/prom/prometheus

@@ -20,6 +20,9 @@ REQUESTS = Counter('hello_world_total', 'Hello World requested')
 # 예외 처리 기능 
 EXCEPTIONS = Counter('hello_world_exceptions_total', 'Exceptions serving Hello World.')
 
+# 응답 크기 측정 기능
+RESPONSE_SIZE = Counter('hello_world_response_size_bytes_total', 'Total size of responses in bytes.')
+
 class MyHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         # 계측 부분
@@ -33,7 +36,10 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
                 raise Exception("Random error occurred!")
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b'Hello, World!')
+        # with random response size
+        response_content = f'Hello, World! random_int: {random.randint(50, 150)}'.encode('utf-8')
+        RESPONSE_SIZE.inc(len(response_content))  # 응답 크기를 카운터에 추가
+        self.wfile.write(response_content)
     # 얼마나 많은 요청이 처리되었는지 알지 못하면, 예외 개수는 유용하지 않음
     # rate(hello_world_exceptions_total[1m]) / rate(hello_world_total[1m])라고 하면, 지난 1분 동안의 예외 비율을 계산할 수 있음
     # 요청이 없는 경우, 시간 주기(period)의 예외 비율 그래프에 차이가 있다는 사실
